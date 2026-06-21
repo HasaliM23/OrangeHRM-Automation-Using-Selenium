@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.OrangeAdminPage;
 import pages.OrangeDashboardPage;
@@ -23,10 +24,34 @@ public class OrangeHrmTest extends BaseTest {
     }
 
     @Test
-    public void verifyLoginWithInvalidCredentials() {
+    /*public void verifyLoginWithInvalidCredentials() {
         OrangeLoginPage loginPage = new OrangeLoginPage(driver);
 
         loginPage.loginToOrangeHRM("Admin", "12345");
+        String actualMessage = loginPage.getErrorMessageText();
+        String expectedErrorMessage = "Invalid credentials";
+
+        Assert.assertEquals(actualMessage, expectedErrorMessage,
+                "BUG! Correct error message for invalid credentials not displayed.");
+    }
+*/
+    // 1. Create an array of invalid test data sets that need to be tested.
+    @DataProvider(name = "invalidLoginData")
+    public Object[][] getInvalidLoginData() {
+        return new Object[][] {
+                { "Admin", "12345" },       // 1 Wrong Password
+                { "WrongUser", "admin123" }, // 2 Wrong Username)
+                { "FakeUser", "FakePass" }   // 3 වBoth incorrect
+        };
+    }
+
+    // 2. Link the DataProvider to this test method.
+    @Test(dataProvider = "invalidLoginData")
+    public void verifyLoginWithInvalidCredentials(String uname, String pword) {
+        OrangeLoginPage loginPage = new OrangeLoginPage(driver);
+
+        // Use the uname and pword values from the DataProvider instead of hardcoded values.
+        loginPage.loginToOrangeHRM(uname, pword);
         String actualMessage = loginPage.getErrorMessageText();
         String expectedErrorMessage = "Invalid credentials";
 
