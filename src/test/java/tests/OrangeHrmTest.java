@@ -153,6 +153,28 @@ public class OrangeHrmTest {
     }
 
 
+    @Test
+    public void verifyDeleteEmployeeFlow() {
+        // 1. Login
+        loginPage.loginToOrangeHRM("Admin", "admin123");
+        Assert.assertTrue(dashboardPage.isDashboardLoaded(), "Dashboard failed to load!");
+
+
+        pimPage.navigateToPimModule();
+        pimPage.clickAddEmployee();
+
+
+        String empId = pimPage.addNewEmployee("Cristiano", "Ronaldo");
+
+
+        pimPage.getProfileHeaderName();
+
+        // 3.DELETE FLOW
+        pimPage.deleteEmployeeById(empId);
+
+    }
+
+
 
 
 

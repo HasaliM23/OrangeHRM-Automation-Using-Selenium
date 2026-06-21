@@ -31,6 +31,13 @@ public class OrangePimPage {
 
     private By jobSaveButton = By.xpath("//button[@type='submit']");
 
+    private By employeeIdSearchInput = By.xpath("//label[text() = 'Employee Id']/following::input[1]");
+     private By searchButton = By.xpath("//button[.=' Search ']");
+    private By deleteIconInTable = By.xpath("//i[contains(@class, 'bi-trash')]");
+    private By yesDeleteButton = By.xpath("//button[.=' Yes, Delete ']");
+
+
+
 
     // 2. Constructor
 
@@ -53,13 +60,17 @@ public class OrangePimPage {
 
     }
 
-    public void addNewEmployee(String firstName, String lastName){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameField)).sendKeys(firstName);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameField)).sendKeys(lastName);
-        By formLoader = By.xpath("//div[@class='oxd-form-loader']");
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(formLoader));
-        wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
 
+    public String addNewEmployee(String firstName, String lastName) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameField)).sendKeys(firstName);
+        driver.findElement(lastNameField).sendKeys(lastName);
+
+
+        String employeeId = driver.findElement(By.xpath("//label[text()='Employee Id']/following::input[1]")).getAttribute("value");
+
+        driver.findElement(saveButton).click();
+
+        return employeeId;
     }
 
     public String getProfileHeaderName() {
@@ -87,6 +98,21 @@ public class OrangePimPage {
 
         wait.until(ExpectedConditions.elementToBeClickable(jobSaveButton)).click();
 
+
+    }
+
+    public void deleteEmployeeById(String empId){
+
+        wait.until(ExpectedConditions.elementToBeClickable(pimMenu)).click();
+
+        var idInput = wait.until(ExpectedConditions.visibilityOfElementLocated(employeeIdSearchInput));
+        idInput.clear();
+        idInput.sendKeys(empId);
+        wait.until(ExpectedConditions.elementToBeClickable(searchButton)).click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(deleteIconInTable)).click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(yesDeleteButton)).click();
 
     }
 
