@@ -51,7 +51,7 @@ public class OrangeHrmTest extends BaseTest {
         OrangeLoginPage loginPage = new OrangeLoginPage(driver);
         OrangePimPage pimPage = new OrangePimPage(driver);
 
-        loginPage.loginToOrangeHRM("Admin", "admin123");
+        loginPage.loginToOrangeHRM("Admi", "admin12");
         pimPage.navigateToPimModule();
         pimPage.clickAddEmployee();
 

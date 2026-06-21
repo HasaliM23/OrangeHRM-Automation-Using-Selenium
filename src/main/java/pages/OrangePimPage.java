@@ -86,19 +86,18 @@ public class OrangePimPage {
         wait.until(ExpectedConditions.elementToBeClickable(jobSideMenu)).click();
     }
 
-    public  void updateJobTitle(String jobTitleName) {
+    public void updateJobTitle(String jobTitleName) {
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("oxd-loading-spinner")));
 
         wait.until(ExpectedConditions.elementToBeClickable(jobTitleDropDown)).click();
 
-
+        // 3. Dynamic XPath
         String dynamicXpath = "//div[@role='listbox']//span[text()='" + jobTitleName + "']";
-
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(dynamicXpath))).click();
 
-
+        // 4. save
         wait.until(ExpectedConditions.elementToBeClickable(jobSaveButton)).click();
-
-
     }
 
     public void deleteEmployeeById(String empId){
